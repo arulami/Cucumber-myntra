@@ -1,5 +1,5 @@
 Given('User is on Main page') do
-  puts "Check"
+  $wait.until { $driver.find_element(:xpath, "//a[@class='myntraweb-sprite desktop-logo sprites-headerLogo']")}
 end
 
 When('User enter search item {string}') do |item|
@@ -20,16 +20,14 @@ end
 Then('User navigate to search result page') do
   $wait.until { $driver.find_element(:xpath, "//h4[normalize-space()='Model Name']")}
   $driver.find_element(:xpath, "//h4[normalize-space()='Model Name']").click
-  sleep(10)
-
 end
 
 Then('User select the Model name {string}') do |string|
+  $wait.until { $driver.find_element(:xpath, "//label[normalize-space()='#{string}']")}
   $driver.find_element(:xpath, "//label[normalize-space()='#{string}']").click
-  sleep(10)
+  $wait.until { $driver.find_element(:class, "img-responsive")}
   $driver.find_element(:class, "img-responsive").click
   sleep(10)
-
 end
 
 
@@ -52,7 +50,7 @@ Then('User add to bag') do
   end
 
 And('User go to bag') do
-  sleep(3)
+  sleep(4)
   $driver.find_element(:xpath, "//span[normalize-space()='Bag']").click
   #check for place order text
   $driver.find_element(:xpath, "//div[contains(text(),'Place Order')]")
